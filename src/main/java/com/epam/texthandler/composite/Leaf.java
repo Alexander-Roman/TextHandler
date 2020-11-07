@@ -1,5 +1,6 @@
 package com.epam.texthandler.composite;
 
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Leaf extends AbstractComponent {
@@ -13,6 +14,16 @@ public class Leaf extends AbstractComponent {
 
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public boolean hasChildren() {
+        return false;
+    }
+
+    @Override
+    public Iterator<Component> iterator() {
+        return new Itr();
     }
 
     @Override
@@ -43,5 +54,21 @@ public class Leaf extends AbstractComponent {
                 "type=" + getType() +
                 ", value='" + value + '\'' +
                 '}';
+    }
+
+    public class Itr implements Iterator<Component> {
+
+        private boolean hasNext = true;
+
+        @Override
+        public boolean hasNext() {
+            return hasNext;
+        }
+
+        @Override
+        public Leaf next() {
+            hasNext = false;
+            return Leaf.this;
+        }
     }
 }

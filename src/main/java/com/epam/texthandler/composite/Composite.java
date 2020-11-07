@@ -1,9 +1,6 @@
 package com.epam.texthandler.composite;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Composite extends AbstractComponent {
 
@@ -16,6 +13,16 @@ public class Composite extends AbstractComponent {
 
     public List<Component> getChildren() {
         return Collections.unmodifiableList(children);
+    }
+
+    @Override
+    public boolean hasChildren() {
+        return true;
+    }
+
+    @Override
+    public Iterator<Component> iterator() {
+        return children.iterator();
     }
 
     @Override

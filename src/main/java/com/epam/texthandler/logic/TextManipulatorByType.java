@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class TextManipulator {
+public class TextManipulatorByType {
 
     private static final String SEPARATOR = " ";
 
@@ -104,21 +104,16 @@ public class TextManipulator {
 
     private List<Component> resolveMath(List<Component> components) {
         List<Component> resolved = new ArrayList<Component>();
-        List<String> maths = new ArrayList<String>();
         for (Component component : components) {
             Type type = component.getType();
             if (type == Type.MATH) {
                 String value = ((Leaf) component).getValue();
-                maths.add(value);
+                MathInterpreter interpreter = new MathInterpreter(value);
+                int result = interpreter.calculate();
+                String lexeme = Integer.toString(result);
+                Leaf leaf = new Leaf(Type.WORD, lexeme);
+                resolved.add(leaf);
             } else {
-                if (!maths.isEmpty()) {
-                    MathInterpreter interpreter = new MathInterpreter(maths);
-                    int result = interpreter.calculate();
-                    String lexeme = Integer.toString(result);
-                    Leaf leaf = new Leaf(Type.WORD, lexeme);
-                    resolved.add(leaf);
-                    maths.clear();
-                }
                 resolved.add(component);
             }
         }

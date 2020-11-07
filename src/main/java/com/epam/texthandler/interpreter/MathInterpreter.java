@@ -7,11 +7,12 @@ import java.util.List;
 
 public class MathInterpreter {
 
+    private static final String SEPARATOR = "[\\s_]";
     private final List<Expression> expressions = new ArrayList<Expression>();
     private final Deque<Integer> context = new LinkedList<Integer>();
 
-    public MathInterpreter(List<String> values) {
-        parse(values);
+    public MathInterpreter(String source) {
+        parse(source);
     }
 
     public int calculate() {
@@ -21,20 +22,15 @@ public class MathInterpreter {
         return context.pop();
     }
 
-    private void parse(List<String> values) {
+    private void parse(String source) {
+        String[] values = source.split(SEPARATOR);
         for (String value : values) {
             switch (value) {
                 case "+":
                     expressions.add(new TerminalExpressionPlus());
                     break;
-                case "-":
-                    expressions.add(new TerminalExpressionMinus());
-                    break;
                 case "*":
                     expressions.add(new TerminalExpressionMultiply());
-                    break;
-                case "/":
-                    expressions.add(new TerminalExpressionDivide());
                     break;
                 default:
                     int number = Integer.parseInt(value);

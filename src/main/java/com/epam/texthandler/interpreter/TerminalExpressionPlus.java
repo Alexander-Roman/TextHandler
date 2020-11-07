@@ -6,13 +6,8 @@ public class TerminalExpressionPlus implements Expression {
 
     @Override
     public void interpret(Deque<Integer> context) {
-        if (context.isEmpty()) {
-            throw new IllegalArgumentException("Math operation with no arguments!");
-        }
-        int result = context.pollFirst();
-        while (!context.isEmpty()) {
-            result += context.pollFirst();
-        }
+        int result = context.pop();
+        result += context.pop();
         context.push(result);
     }
 }

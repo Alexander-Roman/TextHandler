@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class ParagraphParser extends AbstractParser {
 
-    private static final String SENTENCE = "\\s?(.+?[.!?]+)";
+    private static final String SENTENCE = "\\s?(.+?[.!?])";
     private static final int SENTENCE_GROUP = 1;
     private static final Pattern PATTERN = Pattern.compile(SENTENCE);
 
