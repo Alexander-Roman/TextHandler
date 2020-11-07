@@ -1,9 +1,8 @@
 package com.epam.texthandler.composite;
 
-public interface Component extends Iterable<Component> {
+import java.util.List;
 
-    Type getType();
+public interface Component {
 
-    boolean hasChildren();
-
+    List<Component> getChildren();
 }

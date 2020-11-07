@@ -1,15 +1,29 @@
 package com.epam.texthandler.composite;
 
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
-public class Leaf extends AbstractComponent {
+public class Leaf implements Component {
 
+    private final Type type;
     private final String value;
 
-    public Leaf(Type type, String value) {
-        super(type);
+    private Leaf(Type type, String value) {
+        this.type = type;
         this.value = value;
+    }
+
+    public static Leaf wordFrom(String value) {
+        return new Leaf(Type.WORD, value);
+    }
+
+    public static Leaf mathFrom(String value) {
+        return new Leaf(Type.MATH, value);
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public String getValue() {
@@ -17,13 +31,8 @@ public class Leaf extends AbstractComponent {
     }
 
     @Override
-    public boolean hasChildren() {
-        return false;
-    }
-
-    @Override
-    public Iterator<Component> iterator() {
-        return new Itr();
+    public List<Component> getChildren() {
+        return Collections.emptyList();
     }
 
     @Override
@@ -34,16 +43,14 @@ public class Leaf extends AbstractComponent {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
         Leaf leaf = (Leaf) o;
-        return Objects.equals(value, leaf.value);
+        return type == leaf.type &&
+                Objects.equals(value, leaf.value);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
+        int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
@@ -51,24 +58,8 @@ public class Leaf extends AbstractComponent {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "{" +
-                "type=" + getType() +
+                "type=" + type +
                 ", value='" + value + '\'' +
                 '}';
-    }
-
-    public class Itr implements Iterator<Component> {
-
-        private boolean hasNext = true;
-
-        @Override
-        public boolean hasNext() {
-            return hasNext;
-        }
-
-        @Override
-        public Leaf next() {
-            hasNext = false;
-            return Leaf.this;
-        }
     }
 }

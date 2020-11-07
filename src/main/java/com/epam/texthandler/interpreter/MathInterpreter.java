@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MathInterpreter {
 
-    private static final String SEPARATOR = "[\\s_]";
+    private static final String SEPARATOR = "[_\\s]";
     private final List<Expression> expressions = new ArrayList<Expression>();
     private final Deque<Integer> context = new LinkedList<Integer>();
 

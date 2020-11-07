@@ -2,7 +2,6 @@ package com.epam.texthandler.parser;
 
 import com.epam.texthandler.composite.Component;
 import com.epam.texthandler.composite.Composite;
-import com.epam.texthandler.composite.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +13,20 @@ public class TextParser extends AbstractParser {
     private static final String PARAGRAPH = ".+";
     private static final Pattern PATTERN = Pattern.compile(PARAGRAPH);
 
+    public TextParser(Parser successor) {
+        super(successor);
+    }
+
     @Override
     public Component parse(String source) throws ParseException {
-        validateSuccessor();
-
         List<Component> paragraphs = new ArrayList<Component>();
         Matcher matcher = PATTERN.matcher(source);
-        Parser paragraphParser = getSuccessor();
+        Parser paragraphParser = successor();
         while (matcher.find()) {
             String match = matcher.group();
             Component paragraph = paragraphParser.parse(match);
             paragraphs.add(paragraph);
         }
-        return new Composite(Type.TEXT, paragraphs);
+        return new Composite(paragraphs);
     }
 }

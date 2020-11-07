@@ -2,7 +2,6 @@ package com.epam.texthandler.parser;
 
 import com.epam.texthandler.composite.Component;
 import com.epam.texthandler.composite.Composite;
-import com.epam.texthandler.composite.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +14,20 @@ public class ParagraphParser extends AbstractParser {
     private static final int SENTENCE_GROUP = 1;
     private static final Pattern PATTERN = Pattern.compile(SENTENCE);
 
+    public ParagraphParser(Parser successor) {
+        super(successor);
+    }
+
     @Override
     public Component parse(String source) throws ParseException {
-        validateSuccessor();
-
         List<Component> sentences = new ArrayList<Component>();
         Matcher matcher = PATTERN.matcher(source);
         while (matcher.find()) {
-            Parser sentenceParser = getSuccessor();
+            Parser sentenceParser = successor();
             String match = matcher.group(SENTENCE_GROUP);
             Component paragraph = sentenceParser.parse(match);
             sentences.add(paragraph);
         }
-        return new Composite(Type.PARAGRAPH, sentences);
+        return new Composite(sentences);
     }
 }
