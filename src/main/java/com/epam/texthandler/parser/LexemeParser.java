@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class LexemeParser extends AbstractParser {
 
-    private static final String MATH = "[0-9_+*]+";
+    private static final String MATH = "[\\d_+*]+";
     private static final Pattern PATTERN = Pattern.compile(MATH);
 
     public LexemeParser(Parser successor) {

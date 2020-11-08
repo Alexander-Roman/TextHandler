@@ -6,7 +6,6 @@ import com.epam.texthandler.composite.Leaf;
 import com.epam.texthandler.composite.Type;
 import com.epam.texthandler.interpreter.MathInterpreter;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +21,10 @@ public class TextManipulatorImpl implements TextManipulator {
             Leaf leaf = (Leaf) component;
             return resolveLeaf(leaf); // private call
         }
-        List<Component> resolved = new ArrayList<Component>();
-        for (Component child : children) {
-            Component childResolved = resolveMathExpressions(child); // recursive call
-            resolved.add(childResolved);
-        }
+        List<Component> resolved = children
+                .stream()
+                .map(this::resolveMathExpressions) // recursive call
+                .collect(Collectors.toList());
         return new Composite(resolved);
     }
 
