@@ -8,22 +8,22 @@ import java.util.List;
 public class MathInterpreter {
 
     private static final String SEPARATOR = "[_\\s]";
-    private final List<Expression> expressions = new ArrayList<Expression>();
-    private final Deque<Integer> context = new LinkedList<Integer>();
 
-    public MathInterpreter(String source) {
-        parse(source);
+    public MathInterpreter() {
     }
 
-    public int calculate() {
+    public int calculate(String mathExpression) {
+        List<Expression> expressions = parse(mathExpression);
+        Deque<Integer> context = new LinkedList<Integer>();
         for (Expression expression : expressions) {
             expression.interpret(context);
         }
         return context.pop();
     }
 
-    private void parse(String source) {
+    private List<Expression> parse(String source) {
         String[] values = source.split(SEPARATOR);
+        List<Expression> expressions = new ArrayList<Expression>();
         for (String value : values) {
             switch (value) {
                 case "+":
@@ -38,5 +38,6 @@ public class MathInterpreter {
                     break;
             }
         }
+        return expressions;
     }
 }

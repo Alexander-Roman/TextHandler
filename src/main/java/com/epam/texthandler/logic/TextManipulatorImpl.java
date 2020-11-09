@@ -34,8 +34,8 @@ public class TextManipulatorImpl implements TextManipulator {
             return leaf;
         }
         String value = leaf.getValue();
-        MathInterpreter interpreter = new MathInterpreter(value);
-        int result = interpreter.calculate();
+        MathInterpreter interpreter = new MathInterpreter();
+        int result = interpreter.calculate(value);
         String lexeme = Integer.toString(result);
         return Leaf.wordFrom(lexeme);
     }
