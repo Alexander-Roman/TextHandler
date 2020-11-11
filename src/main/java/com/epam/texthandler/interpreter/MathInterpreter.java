@@ -5,13 +5,14 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MathInterpreter {
+public class MathInterpreter implements Interpreter {
 
     private static final String SEPARATOR = "[_\\s]";
 
     public MathInterpreter() {
     }
 
+    @Override
     public int calculate(String mathExpression) {
         List<Expression> expressions = parse(mathExpression);
         Deque<Integer> context = new LinkedList<Integer>();

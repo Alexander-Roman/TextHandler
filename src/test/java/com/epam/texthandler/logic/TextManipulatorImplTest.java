@@ -1,17 +1,24 @@
 package com.epam.texthandler.logic;
 
 import com.epam.texthandler.composite.Component;
+import com.epam.texthandler.interpreter.Interpreter;
+import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
+
 public class TextManipulatorImplTest {
 
-    private final TextManipulator manipulator = new TextManipulatorImpl();
+    private final Interpreter interpreter = Mockito.mock(Interpreter.class);
+    private final TextManipulator manipulator = new TextManipulatorImpl(interpreter);
 
     @Test(dataProvider = "resolveMathExpressionsSample", dataProviderClass = TextManipulatorImplDataProvider.class)
     public void testResolveMathExpressionsShouldReturnComponentWithCalculatedMathValues(Component given, Component expected) {
         //given
         //when
+        when(interpreter.calculate(anyString())).thenReturn(46).thenReturn(132);
         Component actual = manipulator.resolveMathExpressions(given);
         //then
         Assert.assertEquals(actual, expected);

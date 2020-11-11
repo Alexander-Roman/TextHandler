@@ -21,8 +21,8 @@ public class SentenceParser extends AbstractParser {
     public Component parse(String source) throws ParseException {
         List<Component> lexemes = new ArrayList<Component>();
         Matcher matcher = PATTERN.matcher(source);
+        Parser lexemeParser = successor();
         while (matcher.find()) {
-            Parser lexemeParser = successor();
             String match = matcher.group();
             Component paragraph = lexemeParser.parse(match);
             lexemes.add(paragraph);

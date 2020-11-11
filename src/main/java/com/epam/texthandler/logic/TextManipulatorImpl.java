@@ -4,7 +4,7 @@ import com.epam.texthandler.composite.Component;
 import com.epam.texthandler.composite.Composite;
 import com.epam.texthandler.composite.Leaf;
 import com.epam.texthandler.composite.Type;
-import com.epam.texthandler.interpreter.MathInterpreter;
+import com.epam.texthandler.interpreter.Interpreter;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,6 +13,11 @@ import java.util.stream.Collectors;
 public class TextManipulatorImpl implements TextManipulator {
 
     private static final String SEPARATOR = " ";
+    private final Interpreter interpreter;
+
+    public TextManipulatorImpl(Interpreter interpreter) {
+        this.interpreter = interpreter;
+    }
 
     @Override /* Recursive */
     public Component resolveMathExpressions(Component component) {
@@ -34,7 +39,6 @@ public class TextManipulatorImpl implements TextManipulator {
             return leaf;
         }
         String value = leaf.getValue();
-        MathInterpreter interpreter = new MathInterpreter();
         int result = interpreter.calculate(value);
         String lexeme = Integer.toString(result);
         return Leaf.wordFrom(lexeme);
