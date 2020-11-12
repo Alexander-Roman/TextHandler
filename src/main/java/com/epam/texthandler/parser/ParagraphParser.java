@@ -22,8 +22,8 @@ public class ParagraphParser extends AbstractParser {
     public Component parse(String source) throws ParseException {
         List<Component> sentences = new ArrayList<Component>();
         Matcher matcher = PATTERN.matcher(source);
+        Parser sentenceParser = successor();
         while (matcher.find()) {
-            Parser sentenceParser = successor();
             String match = matcher.group(SENTENCE_GROUP);
             Component paragraph = sentenceParser.parse(match);
             sentences.add(paragraph);
