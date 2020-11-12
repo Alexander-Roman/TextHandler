@@ -40,7 +40,7 @@ public class TextManipulatorImplTestComponentCreator {
         return given;
     }
 
-    public Component getResolved() {
+    public Component getMathResolved() {
         Component sentenceFirst = new Composite(Arrays.asList(
                 Leaf.wordFrom("46"),
                 Leaf.wordFrom("WordTest")

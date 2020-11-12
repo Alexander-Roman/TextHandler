@@ -23,7 +23,7 @@ public class TextManipulatorImplTest {
     public void setUp() {
         TextManipulatorImplTestComponentCreator creator = new TextManipulatorImplTestComponentCreator();
         given = creator.getGiven();
-        resolveMathExpected = creator.getResolved();
+        resolveMathExpected = creator.getMathResolved();
         sortParagraphsExpected = creator.getParagraphsSorted();
         sortWordsInAllSentencesExpected = creator.getWordsBySentencesSorted();
     }
