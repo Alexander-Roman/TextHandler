@@ -3,42 +3,44 @@ package com.epam.texthandler.logic;
 import com.epam.texthandler.composite.Component;
 import com.epam.texthandler.composite.Composite;
 import com.epam.texthandler.composite.Leaf;
-import org.testng.annotations.DataProvider;
 
 import java.util.Arrays;
 
-public class TextManipulatorImplDataProvider {
+public class TextManipulatorImplTestComponentCreator {
 
-    private static final Component SENTENCE_FIRST = new Composite(Arrays.asList(
+    private final Component givenSentenceFirst = new Composite(Arrays.asList(
             Leaf.mathFrom("10_13_+_2_*"),
             Leaf.wordFrom("WordTest")
     ));
-    private static final Component SENTENCE_SECOND = new Composite(Arrays.asList(
+    private final Component givenSentenceSecond = new Composite(Arrays.asList(
             Leaf.wordFrom("LongWordTest"),
             Leaf.wordFrom("WordTest"),
             Leaf.mathFrom("10_13_*_2_+")
     ));
-    private static final Component SENTENCE_THIRD = new Composite(Arrays.asList(
+    private final Component givenSentenceThird = new Composite(Arrays.asList(
             Leaf.wordFrom("WordTest"),
             Leaf.wordFrom("LongWordTest")
     ));
-    private static final Component PARAGRAPH_FIRST = new Composite(Arrays.asList(
-            SENTENCE_FIRST,
-            SENTENCE_SECOND,
-            SENTENCE_THIRD
+    private final Component givenParagraphFirst = new Composite(Arrays.asList(
+            givenSentenceFirst,
+            givenSentenceSecond,
+            givenSentenceThird
     ));
-    private static final Component PARAGRAPH_SECOND = new Composite(Arrays.asList(
-            SENTENCE_SECOND,
-            SENTENCE_THIRD
+    private final Component givenParagraphSecond = new Composite(Arrays.asList(
+            givenSentenceSecond,
+            givenSentenceThird
     ));
-    private static final Component TEXT_GIVEN = new Composite(Arrays.asList(
-            PARAGRAPH_FIRST,
-            PARAGRAPH_SECOND
+    private final Component given = new Composite(Arrays.asList(
+            givenParagraphFirst,
+            givenParagraphSecond
     ));
 
 
-    @DataProvider(name = "resolveMathExpressionsSample")
-    public static Object[][] getResolveMathExpressionsSample() {
+    public Component getGiven() {
+        return given;
+    }
+
+    public Component getResolved() {
         Component sentenceFirst = new Composite(Arrays.asList(
                 Leaf.wordFrom("46"),
                 Leaf.wordFrom("WordTest")
@@ -61,32 +63,20 @@ public class TextManipulatorImplDataProvider {
                 sentenceSecond,
                 sentenceThird
         ));
-        Component expected = new Composite(Arrays.asList(
+        return new Composite(Arrays.asList(
                 paragraphFirst,
                 paragraphSecond
         ));
-        return new Object[][]{{TEXT_GIVEN, expected}};
     }
 
-    @DataProvider(name = "restoreTextSample")
-    public static Object[][] getRestoreTextSample() {
-        String expected = "10_13_+_2_* WordTest LongWordTest WordTest 10_13_*_2_+ WordTest LongWordTest" +
-                System.lineSeparator() + "LongWordTest WordTest 10_13_*_2_+ WordTest LongWordTest";
-
-        return new Object[][]{{TEXT_GIVEN, expected}};
-    }
-
-    @DataProvider(name = "sortParagraphsSample")
-    public static Object[][] getSortParagraphsSample() {
-        Component expected = new Composite(Arrays.asList(
-                PARAGRAPH_SECOND,
-                PARAGRAPH_FIRST
+    public Component getParagraphsSorted() {
+        return new Composite(Arrays.asList(
+                givenParagraphSecond,
+                givenParagraphFirst
         ));
-        return new Object[][]{{TEXT_GIVEN, expected}};
     }
 
-    @DataProvider(name = "sortWordsInAllSentencesSample")
-    public static Object[][] getSortWordsInAllSentencesSample() {
+    public Component getWordsBySentencesSorted() {
         Component sentenceFirst = new Composite(Arrays.asList(
                 Leaf.wordFrom("WordTest"),
                 Leaf.mathFrom("10_13_+_2_*")
@@ -99,16 +89,15 @@ public class TextManipulatorImplDataProvider {
         Component paragraphFirst = new Composite(Arrays.asList(
                 sentenceFirst,
                 sentenceSecond,
-                SENTENCE_THIRD
+                givenSentenceThird
         ));
         Component paragraphSecond = new Composite(Arrays.asList(
                 sentenceSecond,
-                SENTENCE_THIRD
+                givenSentenceThird
         ));
-        Component expected = new Composite(Arrays.asList(
+        return new Composite(Arrays.asList(
                 paragraphFirst,
                 paragraphSecond
         ));
-        return new Object[][]{{TEXT_GIVEN, expected}};
     }
 }
